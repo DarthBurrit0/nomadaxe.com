@@ -16,7 +16,8 @@
     "routes": "0.1.1",
     "error-page": "0.0.6",
     "browserify": "1.17.3",
-    "domready": "0.2.11"
+    "domready": "0.2.11",
+    "shoe": "0.0.7"
   },
   "devDependencies": {},
   "scripts": {
