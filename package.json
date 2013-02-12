@@ -1,0 +1,36 @@
+{
+  "name": "nomadaxe.com",
+  "private": true,
+  "version": "0.0.0",
+  "description": "The darkest depths await your blade.",
+  "homepage": "http://nomadaxe.com",
+  "bugs": "https://github.com/DarthBurrit0/nomadaxe.com/issues",
+  "main": "lib/index.js",
+  "dependencies": {
+    "node-uuid": "1.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha test/test-*.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:DarthBurrit0/nomadaxe.com.git"
+  },
+  "keywords": [
+    "game",
+    "ios",
+    "nomad",
+    "axe",
+    "vikings"
+  ],
+  "author": "Evan Campbell <evan@indestructibleart.com>",
+  "contributors": [
+    "Michael Matuzak <michael@lambdaphant.com> (http://lambdaphant.com)",
+    "Jason Campbell <jason@js.la> (http://twitter.com/jxson)"
+  ],
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "cce940aad368703f1b12d7f000968115f3bc39c6"
+}
