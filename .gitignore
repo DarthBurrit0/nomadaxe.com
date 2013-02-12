@@ -1,2 +1,3 @@
 build
 *.tmproj
+.DS_Store
