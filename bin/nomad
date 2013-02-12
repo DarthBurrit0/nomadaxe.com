@@ -1,0 +1,66 @@
+#!/usr/bin/env node
+
+var cli = require('command-router')
+  , server = require('../lib/server')
+  , path = require('path')
+  , fs = require('fs')
+
+// # CLI options and defaults
+cli.option({ name: 'help'
+, alias: 'h'
+, default: false
+, type: Boolean
+})
+
+cli.option({ name: 'port'
+, default: process.env.PORT || 8080
+, type: Number
+})
+
+cli.option({ name: 'host'
+, default: process.env.HOST || '0.0.0.0'
+, type: String
+})
+
+cli.option({ name: 'log-level'
+, default: 'trace'
+, type: String
+})
+
+// CLI commands
+cli.command('', fail)
+cli.command('help', help)
+
+cli.command('server', function(){
+  if (cli.options.help) return help('server')
+
+  server(cli.options)
+  .listen(cli.options.port, cli.options.host)
+})
+
+// this needs to the the last one
+cli.command('*', fail)
+
+// Kick the whole thing off...
+cli.parse(process.argv)
+
+function help(name, callback){
+  var name = name || 'index'
+    , callback = callback || function(){}
+    , file = path.join(__dirname, '..', 'doc', 'cli', name + '.md')
+    , stream = fs.createReadStream(file, { encoding: 'utf8' })
+
+  stream.on('data', console.log)
+
+  stream.on('error', function(err){
+    console.error(err)
+
+    process.exit(1)
+  })
+
+  stream.on('end', callback)
+}
+
+function fail(){
+  help('index', function(){ process.exit(1) })
+}
