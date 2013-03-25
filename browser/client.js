@@ -1,5 +1,6 @@
 
 var domready = require('domready')
+  , PIXI = require('./pixi')
   , shoe = require('shoe')
   , sock = shoe('/sock')
   , $qs = document.querySelector.bind(document)
@@ -29,13 +30,20 @@ function touchMove() {
 }
 
 domready(function(){
-  var canvas = $qs('#app')
-    , ctx = canvas.getContext('2d')
+  var interactive = true
+  var stage = new PIXI.Stage(0x000000, interactive)
+  var renderer = PIXI.autoDetectRenderer(620, 400)
+  document.body.appendChild(renderer.view)
 
-  initEvents(canvas)
-  resizeCanvas(canvas)
+  requestAnimFrame( animate )
+  var bear = PIXI.Sprite.fromImage("public/images/256_Bear_Walk.png")
 
-  console.log('Where am I?')
+  stage.addChild(bear)
+
+  function animate() {
+    requestAnimFrame( animate )
+    renderer.render(stage)
+  }
 
   sock.on('data', function(data){
     console.log(data)
