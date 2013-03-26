@@ -15,9 +15,10 @@
     "beardo": "0.0.10",
     "routes": "0.1.1",
     "error-page": "0.0.6",
-    "browserify": "2.7.1",
+    "browserify": "1.17.3",
     "domready": "0.2.11",
-    "shoe": "0.0.7"
+    "shoe": "0.0.7",
+    "st": "0.1.2"
   },
   "devDependencies": {},
   "scripts": {
