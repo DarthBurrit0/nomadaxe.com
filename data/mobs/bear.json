@@ -1,0 +1,22 @@
+{
+    "id": "bear",
+    "width": 64,
+    "height": 64,
+    "animations": {
+        "attack_right": {
+            "length": 3
+            "row": 0
+        },
+
+        "walk_right": {
+            "length": 2,
+            "row": 1
+        }
+        
+    },
+
+    "hp": 100,
+
+    "items": {
+    }
+}
