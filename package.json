@@ -1,7 +1,7 @@
 {
   "name": "nomadaxe.com",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.0-1",
   "description": "The darkest depths await your blade.",
   "homepage": "http://nomadaxe.com",
   "bugs": "https://github.com/DarthBurrit0/nomadaxe.com/issues",
@@ -23,7 +23,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "mocha test/test-*.js",
-    "start": "node server.js"
+    "start": "./bin/nomad server"
   },
   "repository": {
     "type": "git",
@@ -43,5 +43,9 @@
   ],
   "license": "MIT",
   "readmeFilename": "README.md",
-  "gitHead": "cce940aad368703f1b12d7f000968115f3bc39c6"
+  "gitHead": "cce940aad368703f1b12d7f000968115f3bc39c6",
+  "subdomain": "nomadaxe",
+  "engines": {
+    "node": "0.10.5"
+  }
 }
