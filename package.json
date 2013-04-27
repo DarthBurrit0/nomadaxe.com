@@ -15,7 +15,7 @@
     "beardo": "0.0.10",
     "routes": "0.1.1",
     "error-page": "0.0.6",
-    "browserify": "1.17.3",
+    "browserify": "2.13.2",
     "domready": "0.2.11",
     "shoe": "0.0.7",
     "st": "0.1.2"
