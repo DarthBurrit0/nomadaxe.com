@@ -18,7 +18,8 @@
     "browserify": "2.13.2",
     "domready": "0.2.11",
     "shoe": "0.0.7",
-    "st": "0.1.2"
+    "st": "0.1.2",
+    "haiku": "0.1.0-dev.1"
   },
   "devDependencies": {},
   "scripts": {
