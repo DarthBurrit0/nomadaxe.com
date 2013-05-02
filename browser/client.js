@@ -36,7 +36,7 @@ domready(function(){
   document.body.appendChild(renderer.view)
 
   requestAnimFrame( animate )
-  var bear = PIXI.Sprite.fromImage("public/images/256_Bear_Walk.png")
+  var bear = PIXI.Sprite.fromImage("/images/256_Bear_Walk.png")
 
   stage.addChild(bear)
 
