@@ -1,7 +1,7 @@
 {
   "name": "nomadaxe.com",
   "private": true,
-  "version": "0.0.0-10",
+  "version": "0.0.0-11",
   "description": "The darkest depths await your blade.",
   "homepage": "http://nomadaxe.com",
   "bugs": "https://github.com/DarthBurrit0/nomadaxe.com/issues",
@@ -21,9 +21,11 @@
     "st": "0.1.2",
     "haiku": "0.1.0-dev.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "~1.4.0"
+  },
   "scripts": {
-    "test": "mocha test/test-*.js",
+    "test": "mocha test/test-*.js --reporter dot",
     "start": "./bin/start.js"
   },
   "repository": {
