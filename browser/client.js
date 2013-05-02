@@ -1,8 +1,8 @@
 
 var domready = require('domready')
+  , PIXI = require('./pixi')
   , shoe = require('shoe')
   , sock = shoe('/sock')
-  , Stats = require('./stats')
   , $qs = document.querySelector.bind(document)
 
 function resizeCanvas(c) {
@@ -29,37 +29,25 @@ function touchMove() {
   console.log('touch xy')
 }
 
-function initStats() {
-  var stats = new Stats()
-  stats.setMode(1)
-  stats.domElement.style.position = 'absolute'
-  stats.domElement.style.left = '0px'
-  stats.domElement.style.top = '0px'
-  document.body.appendChild(stats.domElement)
-
-  return stats
-}
-
 domready(function(){
-  var canvas = $qs('#app')
-    , ctx = canvas.getContext('2d')
-    , stats
+  var interactive = true
+  var stage = new PIXI.Stage(0x000000, interactive)
+  var renderer = PIXI.autoDetectRenderer(620, 400)
+  document.body.appendChild(renderer.view)
 
-  initEvents(canvas)
-  resizeCanvas(canvas)
-  stats = initStats()
+  requestAnimFrame( animate )
+  var bear = PIXI.Sprite.fromImage("public/images/256_Bear_Walk.png")
 
-  console.log('Where am I?')
+  stage.addChild(bear)
+
+  function animate() {
+    requestAnimFrame( animate )
+    renderer.render(stage)
+  }
 
   sock.on('data', function(data){
     console.log(data)
   })
-
-  setInterval( function () {
-    stats.begin()
-    console.log('tick')
-    stats.end()
-  }, 1000/60);
 })
 
 
