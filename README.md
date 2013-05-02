@@ -1,4 +1,4 @@
-# Nomad Axe
+# Nomad Axe [![Build Status](https://travis-ci.org/DarthBurrit0/nomadaxe.com.png?branch=master)](https://travis-ci.org/DarthBurrit0/nomadaxe.com)
 
 ...
 
