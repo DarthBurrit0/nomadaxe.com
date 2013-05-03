@@ -1,8 +1,6 @@
-# Nomad Axe [![Build Status](https://travis-ci.org/DarthBurrit0/nomadaxe.com.png?branch=master)](https://travis-ci.org/DarthBurrit0/nomadaxe.com) ![deploy](http://webhooks.nodejitsu.com/DarthBurrit0/nomadaxe.com)
+# Nomad Axe [![Build Status](https://travis-ci.org/DarthBurrit0/nomadaxe.com.png?branch=master)](https://travis-ci.org/DarthBurrit0/nomadaxe.com)
 
-testing
-
-...
+[![deploy](https://webhooks.nodejitsu.com/DarthBurrit0/nomadaxe.com.png)](http://nomadaxe.com)
 
 # Development
 
