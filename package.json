@@ -19,7 +19,8 @@
     "domready": "0.2.11",
     "shoe": "0.0.7",
     "st": "0.1.2",
-    "haiku": "0.1.0-dev.1"
+    "haiku": "0.1.0-dev.1",
+    "bunyan": "~0.21.1"
   },
   "devDependencies": {
     "mocha": "~1.4.0"

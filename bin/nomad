@@ -23,7 +23,7 @@ cli.option({ name: 'host'
 })
 
 cli.option({ name: 'log-level'
-, default: 'trace'
+, default: 'info'
 , type: String
 })
 
