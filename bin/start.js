@@ -3,4 +3,4 @@
 var server = require('../lib/server')
   , config = { port: 8080 }
 
-server(config).listen(config.port)
+server.listen(config.port)
