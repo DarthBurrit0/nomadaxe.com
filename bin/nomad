@@ -34,7 +34,7 @@ cli.command('help', help)
 cli.command('server', function(){
   if (cli.options.help) return help('server')
 
-  server(cli.options)
+  server
   .listen(cli.options.port, cli.options.host)
 })
 
