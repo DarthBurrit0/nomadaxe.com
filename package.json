@@ -20,7 +20,9 @@
     "shoe": "0.0.7",
     "st": "0.1.2",
     "haiku": "0.1.0-dev.1",
-    "bunyan": "~0.21.1"
+    "bunyan": "~0.21.1",
+    "supertest": "~0.6.0",
+    "rework": "~0.14.0"
   },
   "devDependencies": {
     "mocha": "~1.4.0"
