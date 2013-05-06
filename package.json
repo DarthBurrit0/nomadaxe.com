@@ -28,7 +28,7 @@
     "mocha": "~1.4.0"
   },
   "scripts": {
-    "test": "mocha test/test-*.js --reporter dot",
+    "test": "mocha test/**/test-*.js --reporter dot",
     "start": "./bin/start.js"
   },
   "repository": {
