@@ -23,7 +23,8 @@
     "bunyan": "~0.21.1",
     "supertest": "~0.6.0",
     "rework": "~0.14.0",
-    "mousetrap": "0.0.1"
+    "mousetrap": "0.0.1",
+    "pathfinding": "~0.4.1"
   },
   "devDependencies": {
     "mocha": "~1.4.0"
