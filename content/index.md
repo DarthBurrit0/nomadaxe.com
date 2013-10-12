@@ -1,5 +1,5 @@
 
-## [Play the game](/play)
+## [Play the game](/play.html)
 
 # Dev Log
 
