@@ -11,7 +11,9 @@
     "styl": "~0.2.5",
     "browserify": "~2.34.0",
     "chokidar": "~0.6.3",
-    "colors": "~0.6.2"
+    "colors": "~0.6.2",
+    "domready": "~0.2.12",
+    "image-loaded": "0.0.2"
   },
   "devDependencies": {
     "mocha": "~1.13.0"
