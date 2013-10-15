@@ -12,7 +12,9 @@
     "browserify": "~2.34.0",
     "chokidar": "~0.6.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "~1.13.0"
+  },
   "scripts": {
     "test": "mocha test/test-*.js --reporter dot",
     "start": "node server.js"
