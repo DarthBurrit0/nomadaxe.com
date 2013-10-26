@@ -1,49 +1,109 @@
 ;(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var domready = require('domready')
+
+var inherits = require('inherits')
+var EE = require('events').EventEmitter
 var loaded = require('image-loaded')
+
+module.exports = function(canvas){
+  return new Hero(canvas)
+}
+
+/*
+
+Events:
+
+* ready: hero sprite is loaded
+
+*/
+function Hero(canvas){
+  var hero = this
+
+  hero.img = document.createElement('img')
+  hero.img.src = '/images/hero.png'
+
+  hero.speed = 256/1000 // pixels per second?
+
+  // start in the middle
+  hero.x = canvas.width/2
+  hero.y = canvas.height/2
+
+  hero.keys = {}
+
+  EE.call(hero)
+
+  loaded(hero.img, function(err){
+    hero.emit('ready')
+  })
+
+  hero.attach(canvas)
+}
+
+inherits(Hero, EE)
+
+// Attach user input events to an `element` and modify the hero
+Hero.prototype.attach = function(element){
+  var hero = this
+
+  window.addEventListener('keydown', function(event){
+    hero.keys[event.keyCode] = true
+  })
+
+  window.addEventListener('keyup', function(event){
+    delete hero.keys[event.keyCode]
+  })
+}
+
+// is the user wanting to go a certain direction?
+Hero.prototype.pressed = function(direction){
+  var keys = this.keys
+  var matches = false
+
+  if ((38 in keys || 87 in keys) && direction === 'up') matches = true
+  if ((40 in keys || 83 in keys) && direction === 'down') matches = true
+  if ((39 in keys || 68 in keys) && direction === 'right') matches = true
+  if ((37 in keys || 65 in keys) && direction === 'left') matches = true
+
+  return matches
+}
+
+Hero.prototype.draw = function(context, delta){
+  var hero = this
+
+  if (hero.pressed('up')) hero.y -= hero.speed * delta
+  if (hero.pressed('down')) hero.y += hero.speed * delta
+  if (hero.pressed('right')) hero.x += hero.speed * delta
+  if (hero.pressed('left')) hero.x -= hero.speed * delta
+
+  context.drawImage(hero.img, hero.x, hero.y)
+}
+
+},{"events":4,"image-loaded":8,"inherits":9}],2:[function(require,module,exports){
+
+var domready = require('domready')
 var raf = require('raf')
+var hero = require('./hero')
 
 domready(function(){
-  console.log('dom loaded')
-
   var canvas = document.querySelector('canvas')
   var ctx = canvas.getContext('2d')
 
   canvas.height = document.height
   canvas.width = document.width
 
-  canvas.addEventListener('click', click)
-
   raf(canvas).on('data', draw)
 
-  var image = document.createElement('img')
-  image.src = '/images/hero.png'
+  var player = hero(canvas)
 
-  var ready = false
+  function draw(delta) {
+    ctx.fillStyle = '#ffffff'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-  loaded(image, function(err){
-  	if (err) return console.error(err)
-      ready = true
-  })
-
-  var x = canvas.width/2
-  var y = canvas.height/2
-
-  function draw() {
-      ctx.fillStyle = '#ffffff'
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
-      ctx.drawImage(image, x, y)
- }
-
-  function click(event) {
-    x = event.x
-    y = event.y
+    player.draw(ctx, delta)
   }
-
 })
 
 
-},{"domready":6,"image-loaded":7,"raf":8}],2:[function(require,module,exports){
+},{"./hero":1,"domready":7,"raf":10}],3:[function(require,module,exports){
 
 
 //
@@ -261,7 +321,7 @@ if (typeof Object.getOwnPropertyDescriptor === 'function') {
   exports.getOwnPropertyDescriptor = valueObject;
 }
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -542,7 +602,7 @@ EventEmitter.listenerCount = function(emitter, type) {
     ret = emitter._events[type].length;
   return ret;
 };
-},{"util":4}],4:[function(require,module,exports){
+},{"util":5}],5:[function(require,module,exports){
 var Buffer=require("__browserify_Buffer").Buffer;// Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1083,7 +1143,7 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-},{"__browserify_Buffer":5,"_shims":2}],5:[function(require,module,exports){
+},{"__browserify_Buffer":6,"_shims":3}],6:[function(require,module,exports){
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 exports.readIEEE754 = function(buffer, offset, isBE, mLen, nBytes) {
   var e, m,
@@ -3463,7 +3523,7 @@ function hasOwnProperty(obj, prop) {
 },{"_shims":5}]},{},[])
 ;;module.exports=require("buffer-browserify")
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /*!
   * domready (c) Dustin Diaz 2012 - License MIT
   */
@@ -3519,7 +3579,8 @@ function hasOwnProperty(obj, prop) {
       loaded ? fn() : fns.push(fn)
     })
 })
-},{}],7:[function(require,module,exports){
+
+},{}],8:[function(require,module,exports){
 /*
  * Modified version of http://github.com/desandro/imagesloaded v2.1.1
  * MIT License. by Paul Irish et al.
@@ -3562,7 +3623,32 @@ function loaded(image, callback) {
 
 module.exports = loaded
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
+
+},{}],10:[function(require,module,exports){
 module.exports = raf
 
 var EE = require('events').EventEmitter
@@ -3615,5 +3701,5 @@ raf.polyfill = _raf
 raf.now = now
 
 
-},{"events":3}]},{},[1])
+},{"events":4}]},{},[2])
 ;
