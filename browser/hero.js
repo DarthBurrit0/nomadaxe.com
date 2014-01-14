@@ -22,9 +22,13 @@ function Hero(canvas){
 
   hero.speed = 256/1000 // pixels per second?
 
+  hero.width = 32
+  hero.height = 32
+
   // start in the middle
-  hero.x = canvas.width/2
-  hero.y = canvas.height/2
+  hero.x = canvas.width/2 - hero.width/2
+  hero.y = canvas.height/2 - hero.width/2
+
 
   hero.keys = {}
 
@@ -73,5 +77,5 @@ Hero.prototype.draw = function(context, delta){
   if (hero.pressed('right')) hero.x += hero.speed * delta
   if (hero.pressed('left')) hero.x -= hero.speed * delta
 
-  context.drawImage(hero.img, hero.x, hero.y)
+  context.drawImage(hero.img, hero.x, hero.y, hero.width, hero.height)
 }
