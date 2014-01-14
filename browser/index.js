@@ -7,8 +7,7 @@ domready(function(){
   var canvas = document.querySelector('canvas')
   var ctx = canvas.getContext('2d')
 
-  canvas.height = document.height
-  canvas.width = document.width
+  canvas.style.border = '1px solid magenta'
 
   raf(canvas).on('data', draw)
 
