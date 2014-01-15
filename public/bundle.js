@@ -80,11 +80,12 @@ Hero.prototype.draw = function(context, delta){
   context.drawImage(hero.img, hero.x, hero.y, hero.width, hero.height)
 }
 
-},{"events":4,"image-loaded":8,"inherits":9}],2:[function(require,module,exports){
+},{"events":4,"image-loaded":10,"inherits":11}],2:[function(require,module,exports){
 
 var domready = require('domready')
 var raf = require('raf')
 var hero = require('./hero')
+var fps = require('fps')
 
 domready(function(){
   var canvas = document.querySelector('canvas')
@@ -92,6 +93,12 @@ domready(function(){
 
   canvas.width = window.innerWidth
   canvas.height = window.innerHeight
+
+  var ticker = fps({ every: 10 })
+
+  ticker.on('data', function(framerate){
+
+  })
 
   window.addEventListener('resize', resize)
 
@@ -104,16 +111,18 @@ domready(function(){
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     player.draw(ctx, delta)
+
+    ticker.tick()
   }
 
   function resize(event){
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
   }
+
 })
 
-
-},{"./hero":1,"domready":7,"raf":10}],3:[function(require,module,exports){
+},{"./hero":1,"domready":7,"fps":8,"raf":12}],3:[function(require,module,exports){
 
 
 //
@@ -3589,7 +3598,80 @@ function hasOwnProperty(obj, prop) {
       loaded ? fn() : fns.push(fn)
     })
 })
+
 },{}],8:[function(require,module,exports){
+var EventEmitter = require('events').EventEmitter
+  , inherits = require('inherits')
+
+module.exports = fps
+
+// Try use performance.now(), otherwise try
+// +new Date.
+var now = (
+  (function(){ return this }()).performance &&
+  'function' === typeof performance.now
+) ? function() { return performance.now() }
+  : Date.now || function() { return +new Date }
+
+function fps(opts) {
+  if (!(this instanceof fps)) return new fps(opts)
+  EventEmitter.call(this)
+
+  opts = opts || {}
+  this.last = now()
+  this.rate = 0
+  this.time = 0
+  this.decay = opts.decay || 1
+  this.every = opts.every || 1
+  this.ticks = 0
+}
+inherits(fps, EventEmitter)
+
+fps.prototype.tick = function() {
+  var time = now()
+    , diff = time - this.last
+    , fps = diff
+
+  this.ticks += 1
+  this.last = time
+  this.time += (fps - this.time) * this.decay
+  this.rate = 1000 / this.time
+  if (!(this.ticks % this.every)) this.emit('data', this.rate)
+}
+
+
+},{"events":4,"inherits":9}],9:[function(require,module,exports){
+module.exports = inherits
+
+function inherits (c, p, proto) {
+  proto = proto || {}
+  var e = {}
+  ;[c.prototype, proto].forEach(function (s) {
+    Object.getOwnPropertyNames(s).forEach(function (k) {
+      e[k] = Object.getOwnPropertyDescriptor(s, k)
+    })
+  })
+  c.prototype = Object.create(p.prototype, e)
+  c.super = p
+}
+
+//function Child () {
+//  Child.super.call(this)
+//  console.error([this
+//                ,this.constructor
+//                ,this.constructor === Child
+//                ,this.constructor.super === Parent
+//                ,Object.getPrototypeOf(this) === Child.prototype
+//                ,Object.getPrototypeOf(Object.getPrototypeOf(this))
+//                 === Parent.prototype
+//                ,this instanceof Child
+//                ,this instanceof Parent])
+//}
+//function Parent () {}
+//inherits(Child, Parent)
+//new Child
+
+},{}],10:[function(require,module,exports){
 /*
  * Modified version of http://github.com/desandro/imagesloaded v2.1.1
  * MIT License. by Paul Irish et al.
@@ -3632,7 +3714,7 @@ function loaded(image, callback) {
 
 module.exports = loaded
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -3657,7 +3739,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports = raf
 
 var EE = require('events').EventEmitter

@@ -16,7 +16,8 @@
     "image-loaded": "0.0.2",
     "raf": "0.0.3",
     "mousetrap": "0.0.1",
-    "inherits": "~2.0.1"
+    "inherits": "~2.0.1",
+    "fps": "0.0.3"
   },
   "devDependencies": {
     "mocha": "~1.13.0"
