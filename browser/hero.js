@@ -29,7 +29,6 @@ function Hero(canvas){
   hero.x = canvas.width/2 - hero.width/2
   hero.y = canvas.height/2 - hero.width/2
 
-
   hero.keys = {}
 
   EE.call(hero)

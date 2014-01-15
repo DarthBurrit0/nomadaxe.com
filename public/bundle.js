@@ -30,7 +30,6 @@ function Hero(canvas){
   hero.x = canvas.width/2 - hero.width/2
   hero.y = canvas.height/2 - hero.width/2
 
-
   hero.keys = {}
 
   EE.call(hero)
@@ -91,7 +90,10 @@ domready(function(){
   var canvas = document.querySelector('canvas')
   var ctx = canvas.getContext('2d')
 
-  canvas.style.border = '1px solid magenta'
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+
+  window.addEventListener('resize', resize)
 
   raf(canvas).on('data', draw)
 
@@ -102,6 +104,11 @@ domready(function(){
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     player.draw(ctx, delta)
+  }
+
+  function resize(event){
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
   }
 })
 
