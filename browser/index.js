@@ -12,9 +12,10 @@ domready(function(){
   canvas.height = window.innerHeight
 
   var ticker = fps({ every: 10 })
+  var _fps = 0
 
   ticker.on('data', function(framerate){
-
+    _fps = Math.round(framerate)
   })
 
   window.addEventListener('resize', resize)
@@ -28,6 +29,10 @@ domready(function(){
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     player.draw(ctx, delta)
+
+    ctx.font = 'bold 12px sans-serif'
+    ctx.fillStyle = 'black'
+    ctx.fillText('FPS: ' + _fps, 6, 18)
 
     ticker.tick()
   }
