@@ -47,6 +47,7 @@ Hero.prototype.attach = function(element){
   var hero = this
 
   window.addEventListener('keydown', function(event){
+    event.preventDefault()
     hero.keys[event.keyCode] = true
   })
 
