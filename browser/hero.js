@@ -22,6 +22,10 @@ function Hero(canvas){
 
   hero.speed = 256/1000/2.5 // pixels per second? divided by 2.5
 
+  hero.frame = 0
+  hero.delta = 0
+  hero.framerate = 250
+
   hero.width = 32
   hero.height = 32
 
@@ -74,8 +78,15 @@ Hero.prototype.pressed = function(direction){
 Hero.prototype.draw = function(context, delta){
   var hero = this
 
+  if (hero.delta > hero.framerate) {
+      hero.delta = 0
+      hero.frame++
+     if (hero.frame >= 2) hero.frame = 0
+  } else { hero.delta += delta }
+
   if (hero.pressed('up')) hero.y -= hero.speed * delta
   if (hero.pressed('down')) hero.y += hero.speed * delta
+  // if (hero.pressed('right')) hero.move('right', delta)
   if (hero.pressed('right')) hero.x += hero.speed * delta
   if (hero.pressed('left')) hero.x -= hero.speed * delta
 
@@ -86,7 +97,7 @@ Hero.prototype.draw = function(context, delta){
   context.stroke()
 
   context.drawImage(hero.img
-  , 0
+  , hero.frame * 32
   , 0
   , hero.width
   , hero.height
