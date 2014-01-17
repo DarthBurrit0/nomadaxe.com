@@ -2,3 +2,4 @@ build
 *.tmproj
 .DS_Store
 node_modules
+public/bundle.*
