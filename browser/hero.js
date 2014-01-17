@@ -20,7 +20,7 @@ function Hero(canvas){
   hero.img = document.createElement('img')
   hero.img.src = '/images/hero.png'
 
-  hero.speed = 256/1000 // pixels per second?
+  hero.speed = 256/1000/2.5 // pixels per second? divided by 2.5
 
   hero.width = 32
   hero.height = 32
@@ -34,6 +34,8 @@ function Hero(canvas){
   EE.call(hero)
 
   loaded(hero.img, function(err){
+    if (err) console.error('TODO', err)
+
     hero.emit('ready')
   })
 
@@ -77,5 +79,20 @@ Hero.prototype.draw = function(context, delta){
   if (hero.pressed('right')) hero.x += hero.speed * delta
   if (hero.pressed('left')) hero.x -= hero.speed * delta
 
-  context.drawImage(hero.img, hero.x, hero.y, hero.width, hero.height)
+  context.beginPath()
+  context.rect(hero.x, hero.y, hero.width, hero.height)
+  context.lineWidth = 1
+  context.strokeStyle = 'magenta'
+  context.stroke()
+
+  context.drawImage(hero.img
+  , 0
+  , 0
+  , hero.width
+  , hero.height
+  , hero.x
+  , hero.y
+  , hero.width
+  , hero.height
+  )
 }
