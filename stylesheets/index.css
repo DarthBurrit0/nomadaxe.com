@@ -1,6 +1,16 @@
+
+
 body, html {
   height: 100%;
   min-height: 100%;
+}
+
+p {
+  margin: 1.125em;
+}
+
+p img  {
+  max-width:  100%;
 }
 
 body {
