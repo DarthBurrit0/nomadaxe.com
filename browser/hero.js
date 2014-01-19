@@ -25,6 +25,7 @@ function Hero(canvas){
   hero.frame = 0
   hero.delta = 0
   hero.framerate = 250
+  hero.animation = 0 // default y position in the sprite sheet
 
   hero.width = 32
   hero.height = 32
@@ -58,6 +59,7 @@ Hero.prototype.attach = function(element){
   })
 
   window.addEventListener('keyup', function(event){
+    hero.animation = 0
     delete hero.keys[event.keyCode]
   })
 }
@@ -84,21 +86,20 @@ Hero.prototype.draw = function(context, delta){
      if (hero.frame >= 2) hero.frame = 0
   } else { hero.delta += delta }
 
-  if (hero.pressed('up')) hero.y -= hero.speed * delta
-  if (hero.pressed('down')) hero.y += hero.speed * delta
-  // if (hero.pressed('right')) hero.move('right', delta)
-  if (hero.pressed('right')) hero.x += hero.speed * delta
-  if (hero.pressed('left')) hero.x -= hero.speed * delta
+  if (hero.pressed('up')) hero.move('up', delta)
+  if (hero.pressed('down')) hero.move('down', delta)
+  if (hero.pressed('right')) hero.move('right', delta)
+  if (hero.pressed('left')) hero.move('left', delta)
 
-  context.beginPath()
-  context.rect(hero.x, hero.y, hero.width, hero.height)
-  context.lineWidth = 1
-  context.strokeStyle = 'magenta'
-  context.stroke()
+  // context.beginPath()
+  // context.rect(hero.x, hero.y, hero.width, hero.height)
+  // context.lineWidth = 1
+  // context.strokeStyle = 'magenta'
+  // context.stroke()
 
   context.drawImage(hero.img
   , hero.frame * 32
-  , 0
+  , hero.animation
   , hero.width
   , hero.height
   , hero.x
@@ -106,4 +107,26 @@ Hero.prototype.draw = function(context, delta){
   , hero.width
   , hero.height
   )
+}
+
+Hero.prototype.move = function(direction, delta){
+  var hero = this
+  switch (direction) {
+    case 'up':
+      hero.y -= hero.speed * delta
+      hero.animation = 4 * 32
+      break
+    case 'down':
+      hero.y += hero.speed * delta
+      hero.animation = 2 * 32
+      break
+    case 'right':
+      hero.x += hero.speed * delta
+      hero.animation = 1 * 32
+      break
+    case 'left':
+      hero.x -= hero.speed * delta
+      hero.animation = 3 * 32
+      break
+  }
 }

@@ -52,7 +52,7 @@ function css(filename){
 function js(){
   browserify()
   .add(path.join(browser, 'index.js'))
-  .bundle()
+  .bundle({ debug: true })
   .pipe(fs.createWriteStream(path.resolve(__dirname, 'public/bundle.js')))
   .on('finish', function(){
     console.log('* rebuilt', 'public/bundle.js'.grey)
