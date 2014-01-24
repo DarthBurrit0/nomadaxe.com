@@ -25,18 +25,16 @@ function Hero(canvas){
   hero.frame = 0
   hero.delta = 0
   hero.framerate = 250
-  hero.animation = [ 2, 1 ] // default y position in the sprite sheet
+  hero.animation = [ 2 * 32, 1 ] // default y position in the sprite sheet [row in pixels, frames]
 
   hero.width = 32
   hero.height = 32
 
   // start in the middle
   hero.x = canvas.width/2 - hero.width/2
-  hero.y = canvas.height/2 - hero.width/2
+  hero.y = canvas.height/2 - hero.height/2
 
   hero.keys = {}
-
-  hero.direction = 'down'
 
   EE.call(hero)
 
@@ -56,7 +54,7 @@ Hero.prototype.attach = function(element){
   var hero = this
 
   window.addEventListener('keydown', function(event){
-    event.preventDefault()
+    event.preventDefault() // prevents arrow keys from scrolling
     hero.keys[event.keyCode] = true
   })
 
