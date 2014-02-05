@@ -30,6 +30,8 @@ function Hero(canvas){
   hero.width = 32
   hero.height = 32
 
+  hero.facing = direction()
+
   // start in the middle
   hero.x = canvas.width/2 - hero.width/2
   hero.y = canvas.height/2 - hero.height/2
@@ -55,6 +57,10 @@ Hero.prototype.attach = function(element){
 
   window.addEventListener('keydown', function(event){
     event.preventDefault() // prevents arrow keys from scrolling
+
+    var attackKeys = [74, 75]
+    var notAttacking = attackKeys.indexOf(event.keyCode) === -1
+     if (notAttacking) hero.facing = direction(event.keyCode)
     hero.keys[event.keyCode] = true
   })
 
@@ -90,7 +96,8 @@ Hero.prototype.pressed = function(direction){
   if ((40 in keys || 83 in keys) && direction === 'down') matches = true
   if ((39 in keys || 68 in keys) && direction === 'right') matches = true
   if ((37 in keys || 65 in keys) && direction === 'left') matches = true
-  if ((74 in keys) && direction === 'attack') matches = true
+  if ((74 in keys) && direction === 'attack-j') matches = true
+  if ((75 in keys) && direction === 'attack-k') matches = true
 
   return matches
 }
@@ -110,11 +117,67 @@ Hero.prototype.draw = function(context, delta){
   if (hero.pressed('right')) hero.move('right', delta)
   if (hero.pressed('left')) hero.move('left', delta)
 
-  if (hero.pressed('attack')) {
+  if (hero.pressed('attack-j')) {
+    var startAngle = 0
+    var endAngle = 360
+console.log(hero.facing)
+
+    if (hero.facing === 'up') {
+      startAngle = 0
+      endAngle = Math.PI
+    }
+
+    if (hero.facing === 'down') {
+      startAngle = Math.PI
+      endAngle = Math.PI * 2
+    }
+
+   if (hero.facing === 'right') {
+      startAngle = Math.PI / 2
+      endAngle = - Math.PI / 2
+    }
+
+   if (hero.facing === 'left') {
+      startAngle = - Math.PI / 2
+      endAngle = Math.PI / 2
+    }
     context.beginPath()
-    context.rect(hero.x, hero.y, hero.width, hero.height)
+    //context.rect(hero.x, hero.y, hero.width, hero.height)
+    context.arc(hero.x + hero.width/2, hero.y + hero.height/2, hero.width/2, startAngle, endAngle, true)
     context.lineWidth = 1
     context.strokeStyle = 'magenta'
+    context.stroke()
+  }
+
+  if (hero.pressed('attack-k')) {
+    var startAngle = 0
+    var endAngle = 360
+console.log(hero.facing)
+
+    if (hero.facing === 'up') {
+      startAngle = 0
+      endAngle = Math.PI
+    }
+
+    if (hero.facing === 'down') {
+      startAngle = Math.PI
+      endAngle = Math.PI * 2
+    }
+
+   if (hero.facing === 'right') {
+      startAngle = Math.PI / 2
+      endAngle = - Math.PI / 2
+    }
+
+   if (hero.facing === 'left') {
+      startAngle = - Math.PI / 2
+      endAngle = Math.PI / 2
+    }
+    context.beginPath()
+    //context.rect(hero.x, hero.y, hero.width, hero.height)
+    context.arc(hero.x + hero.width/2, hero.y + hero.height/2, (hero.width + 2) / 2, startAngle, endAngle, true)
+    context.lineWidth = 1
+    context.strokeStyle = 'blue'
     context.stroke()
   }
 
@@ -150,4 +213,14 @@ Hero.prototype.move = function(direction, delta){
       hero.animation = [ 3 * 32, 2 ]
       break
   }
+}
+
+function direction ( keyCode ){
+  var d = 'down'
+  if (38 === keyCode || 87 === keyCode) d = 'up'
+  if (40 === keyCode || 83 === keyCode) d = 'down'
+  if (39 === keyCode || 68 === keyCode) d = 'right'
+  if (37 === keyCode || 65 === keyCode) d = 'left'
+
+  return d
 }
