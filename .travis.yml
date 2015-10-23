@@ -1,12 +1,9 @@
 
 language: node_js
 node_js:
-  - 0.1
-
-notifications:
-  email: true
-  webhooks:
-    urls:
-      - http://webhooks.nodejitsu.com/1/deploy
-    on_success: always
-    on_failure: never
+  - 4.2
+deploy:
+  provider: script
+  script: make deploy
+  on:
+    branch: master
