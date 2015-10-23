@@ -23,7 +23,7 @@
     "mocha": "~1.13.0"
   },
   "scripts": {
-    "test": "make test",
+    "test": "make test"
   },
   "repository": {
     "type": "git",
