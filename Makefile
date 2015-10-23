@@ -23,5 +23,5 @@ public/bundle.css: node_modules
 
 bundle: public/bundle.js public/bundle.css
 
-build: clean bundle
+build: bundle
 	./node_modules/haiku/bin/haiku build
