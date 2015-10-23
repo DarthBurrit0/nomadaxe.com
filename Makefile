@@ -1,18 +1,30 @@
+MAKEFLAGS += --warn-undefined-variables
+PATH := node_modules/.bin:$(PATH)
+SHELL := /bin/bash
+
+.SHELLFLAGS := -eu -o pipefail -c
+.DEFAULT_GOAL := all
+.DELETE_ON_ERROR:
+.SUFFIXES:
+
+all: bundles
+
+node_modules: package.json
+	@npm prune
+	@npm install
+	@touch node_modules
+
 .PHONY: test
 test:
 	@exit 0
 
 .PHONY: deploy
-deploy: build
+deploy: build node_modules
 	surge build/ nomadaxe.com
 
-node_modules: package.json
-	@npm prune
-	@npm install
-
+.PHONY: clean
 clean:
 	@$(RM) -fr build
-	@$(RM) -fr node_modules $(STANDALONE).js
 	@$(RM) -fr npm-debug.log
 
 public/bundle.js: node_modules
@@ -21,7 +33,8 @@ public/bundle.js: node_modules
 public/bundle.css: node_modules
 	cat stylesheets/index.css | ./node_modules/.bin/styl --compress > public/bundle.css
 
-bundle: public/bundle.js public/bundle.css
+.PHONY: bundles
+bundles: public/bundle.js public/bundle.css
 
-build: bundle
+build: bundles
 	./node_modules/haiku/bin/haiku build
