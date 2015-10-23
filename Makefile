@@ -1,3 +1,10 @@
+.PHONY: test
+test:
+	@exit 0
+
+.PHONY: deploy
+deploy: build
+	surge build/ nomadaxe.com
 
 node_modules: package.json
 	@npm prune
@@ -18,5 +25,3 @@ bundle: public/bundle.js public/bundle.css
 
 build: clean bundle
 	./node_modules/haiku/bin/haiku build
-
-.PHONY: clean bundle public/bundle.js public/bundle.css
